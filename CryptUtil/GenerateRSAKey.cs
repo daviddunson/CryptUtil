@@ -14,7 +14,7 @@ namespace CryptUtil
     {
         public static void Run()
         {
-            var importedKey = ReadPemFile(@"resources\example.org.key");
+            var importedKey = PEM.Read(@"resources\example.org.key", "RSA PRIVATE KEY");
             Console.WriteLine("Imported key length: {0}", importedKey.Length);
 
             using var rsa = new RSACryptoServiceProvider();
@@ -46,25 +46,6 @@ namespace CryptUtil
             Console.WriteLine();
             Console.WriteLine("Exported key length: {0}", exportedKey.Length);
             Console.WriteLine("Matches exported key: {0}", importedKey.IndexOf(exportedKey) == 0);
-        }
-
-        private static byte[] ReadPemFile(string path)
-        {
-            const string BeginDelimiter = "-----BEGIN RSA PRIVATE KEY-----";
-            const string EndDelimiter = "-----END RSA PRIVATE KEY-----";
-
-            var text = File.ReadAllText(path);
-            var beginIndex = text.IndexOf(BeginDelimiter, StringComparison.Ordinal);
-            var endIndex = text.IndexOf(EndDelimiter, beginIndex, StringComparison.Ordinal);
-
-            if ((beginIndex < 0) || (endIndex <= beginIndex))
-            {
-                throw new Exception();
-            }
-
-            beginIndex += BeginDelimiter.Length;
-            var base64 = text.Substring(beginIndex, endIndex - beginIndex);
-            return Convert.FromBase64String(base64);
         }
     }
 }
