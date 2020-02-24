@@ -31,9 +31,9 @@ namespace CryptUtil
             var subCert = subRequest.Create(caCert, time, time.AddDays(365), BitConverter.GetBytes(epochTime + 1)).CopyWithPrivateKey(subKey);
             File.WriteAllBytes("sub.example.org.cer", subCert.Export(X509ContentType.Cert));
 
-            var key = ECDsa.Create();
-            var request = new CertificateRequest(new X500DistinguishedName("CN=example.org"), key, HashAlgorithmName.SHA256);
-            var cert = request.Create(subCert, time, time.AddDays(365), BitConverter.GetBytes(epochTime + 2)).CopyWithPrivateKey(key);
+            var key = RSA.Create(2048);
+            var request = new CertificateRequest(new X500DistinguishedName("CN=example.org"), key, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+            var cert = request.Create(subCert.SubjectName, X509SignatureGenerator.CreateForECDsa(subCert.GetECDsaPrivateKey()), time, time.AddDays(365), BitConverter.GetBytes(epochTime + 2)).CopyWithPrivateKey(key);
             File.WriteAllBytes("example.org.cer", cert.Export(X509ContentType.Cert));
         }
     }
