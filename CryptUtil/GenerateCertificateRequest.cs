@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GenerateCerfificateRequest.cs" company="GSD Logic">
+// <copyright file="GenerateCertificateRequest.cs" company="GSD Logic">
 //   Copyright © 2020 GSD Logic. All Rights Reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -9,7 +9,7 @@ namespace CryptUtil
     using System.Security.Cryptography;
     using System.Security.Cryptography.X509Certificates;
 
-    public static class GenerateCerfificateRequest
+    public static class GenerateCertificateRequest
     {
         public static void Run()
         {

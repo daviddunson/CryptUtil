@@ -10,7 +10,7 @@ namespace CryptUtil
     {
         private static void Main(string[] args)
         {
-            GenerateCerfificateRequest.Run();
+            GenerateCertificateChain.Run();
         }
     }
 }
